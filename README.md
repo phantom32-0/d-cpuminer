@@ -10,6 +10,7 @@ https://duinocoin.com
 Dependencies
 - gcc
 - libssl
+
 thats it i guess
 
 run ``./build.sh`` to simply build it
