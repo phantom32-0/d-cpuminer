@@ -6,12 +6,38 @@
 #include <netdb.h>
 #include <openssl/sha.h>
 #include <stdlib.h>
+#include <pthread.h>
+
+
+#ifdef _WIN32 // include sleep library for windows or linux - idk if this can stay that way?
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
+
+unsigned int rejectedShares = 0; // globals
+unsigned int acceptedShares = 0;
+unsigned int last_hash_count = 0;
+unsigned int khash_count = 0;
+unsigned int hash_count = 0;
 
 char *my_itoa (int num, char *str) { // convert int to string function
 	if (str == NULL) return NULL;
     sprintf(str, "%d", num);
     return str;
 }
+
+void* hashrateCounter(void* p){
+
+	while(1) {
+		last_hash_count = hash_count;
+ 		khash_count = last_hash_count / 1000;
+  		hash_count = 0;
+  	sleep(1);
+  }
+}
+
 
 int main (int argc, char **argv) {
 	const char* serverip = "163.172.179.54"; // static server ip
@@ -23,8 +49,8 @@ int main (int argc, char **argv) {
 	char serverversion[8];
 	char username[512] = "";
 	
-	printf("\033[1;33md-cpuminer\nMade by phantom32 and revox\n"); #color yellow
-	printf("----------\n\033[0m"); #reset color
+	printf("\033[1;33md-cpuminer\nMade by phantom32 and revox\n"); //color yellow
+	printf("----------\n\033[0m"); //reset color
 
 	socket_desc = socket(AF_INET , SOCK_STREAM , 0); //create socket
 	if (socket_desc == -1) {
@@ -58,8 +84,12 @@ int main (int argc, char **argv) {
 
 	strcat(jobmessage, username); //combine "JOB," and duco username
 
-	int rejectedShares, acceptedShares;
+	
 	printf("Mining started using DUCO-S1 algorithm\n");
+
+	pthread_t id;
+	int j = 0;
+	pthread_create(&id, NULL, hashrateCounter, &j); // start hashrate counter thread
 	while(1) {
 		if (send(socket_desc, jobmessage, strlen(jobmessage), 0) < 0) {
 			printf("Error: Couldn't send JOB message\n");
@@ -83,6 +113,7 @@ int main (int argc, char **argv) {
 		char dLS[512] = "";
 		
 		for(int i=0; i < (100*atoi(diff))+1; i++) {
+			hash_count++;
 			char strintohash[128] = "";
 
 			strcat(strintohash, job);
@@ -122,7 +153,7 @@ int main (int argc, char **argv) {
 				//printf("Feedback: %s\n", feedback);
 				if (strcmp("GOOD", feedback)==0 || strcmp("BLOCK", feedback)==0) {
 					acceptedShares++;
-					printf("Accepted share #%i (%s)\n", acceptedShares, dLS);
+					printf("Accepted share #%i (%s) %ikH/s\n", acceptedShares, dLS, khash_count);
 
 				} else if (strcmp("INVU", feedback)==0) {
 					printf("Error: Incorrect username\n");
@@ -130,7 +161,7 @@ int main (int argc, char **argv) {
 
 				} else {
 					rejectedShares++;
-					printf("Rejected share #%i (%s)\n", rejectedShares, dLS);
+					printf("Rejected share #%i (%s) %ikH/s\n", rejectedShares, dLS, khash_count);
 				}
 				break;
 			}
