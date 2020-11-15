@@ -23,8 +23,8 @@ int main (int argc, char **argv) {
 	char serverversion[8];
 	char username[512] = "";
 	
-	printf("d-cpuminer\nMade by phantom32 (with some revox's help)\n");
-	printf("----------\n");
+	printf("\033[1;33md-cpuminer\nMade by phantom32 and revox\n"); #color yellow
+	printf("----------\n\033[0m"); #reset color
 
 	socket_desc = socket(AF_INET , SOCK_STREAM , 0); //create socket
 	if (socket_desc == -1) {
