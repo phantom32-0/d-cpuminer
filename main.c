@@ -40,7 +40,7 @@ void* hashrateCounter(void* p){
 
 
 int main (int argc, char **argv) {
-	const char* serverip = "163.172.179.54"; // static server ip
+	const char* serverip = "51.15.127.80"; // static server ip
 	const unsigned int serverport = 14808; // static server port
 	char jobmessage[1024] = "JOB,";
 	char serverreply[2048];
