@@ -15,6 +15,7 @@
 #include <unistd.h>
 #endif
 
+#define serverip 51.15.127.80
 
 unsigned int rejectedShares = 0; // globals
 unsigned int acceptedShares = 0;
@@ -40,7 +41,6 @@ void* hashrateCounter(void* p){
 
 
 int main (int argc, char **argv) {
-	const char* serverip = "51.15.127.80"; // static server ip
 	const unsigned int serverport = 14808; // static server port
 	char jobmessage[1024] = "JOB,";
 	char serverreply[2048];
