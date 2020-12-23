@@ -21,4 +21,4 @@ Run ``make`` (or ``./build.sh``) to build d-cpuminer. Then launch it by executin
 
 # License
 
-//TODO
+This project is licensed under the terms of the MIT license.
