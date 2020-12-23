@@ -15,7 +15,7 @@
 #include <unistd.h>
 #endif
 
-#define serverip 51.15.127.80
+#define serverip "51.15.127.80"
 
 unsigned int rejectedShares = 0; // globals
 unsigned int acceptedShares = 0;
