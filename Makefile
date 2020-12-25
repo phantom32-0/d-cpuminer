@@ -1,8 +1,10 @@
-all: build
+EXECUTABLE = d-cpuminer
+FLAGS = -Wall -lcrypto -lpthread -O3
 
-build:
-	gcc main.c -Wall -lcrypto -lpthread -O3 -o d-cpuminer
-	@echo d-cpuminer built, you can now run ./d-cpuminer
+all: main.c
+
+main.c:
+	gcc main.c $(FLAGS) -o $(EXECUTABLE)
 
 clean:
 	rm -f *.o d-cpuminer
