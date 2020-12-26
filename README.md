@@ -10,6 +10,7 @@ C-based CPU miner for [Duino-Coin](https://duinocoin.com)
 # Compiling on Unix/Linux
 
 Dependencies
+- make
 - gcc
 - libssl
 
