@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <string.h>
 #include <netdb.h>
-#include <openssl/sha.h>
 #include <stdlib.h>
 #include <pthread.h>
 
+#include "sha1.h"
 
 #ifdef _WIN32 // include sleep library for windows or linux - idk if this can stay that way?
 #include <Windows.h>
