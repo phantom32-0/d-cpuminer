@@ -14,7 +14,7 @@ Dependencies
 - gcc
 - libssl
 
-Run ``make`` (or ``./build.sh``) to build d-cpuminer. Then launch it by executing `./d-cpuminer`
+Run ``make`` to build d-cpuminer. Then launch it by executing `./d-cpuminer`
 
 # Compiling on Windows
 
