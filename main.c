@@ -31,7 +31,7 @@ int main (int argc, char **argv) {
 	char job_message[64] = "JOB,";
 	char* requested_difficulty = ",LOW";
 	char serverversion[3]; // server ver is always 3 chars
-	char serverreply[40 + 1 + 40 + 1 + 6]; // 2x sha1s, 2x commas, difficulty, \n
+	char serverreply[40 + 1 + 40 + 1 + 8]; // 2x sha1s, 2x commas, difficulty, \n
 	char username[32] = "";
 
 	unsigned int rejected_shares = 0;
@@ -88,7 +88,7 @@ int main (int argc, char **argv) {
 			return 1;
 		}
 
-		if (recv(socket_desc, serverreply, 40 + 1 + 40 + 1 + 6, 0) < 0) {
+		if (recv(socket_desc, serverreply, 40 + 1 + 40 + 1 + 8, 0) < 0) {
 			printf("Error: Couldn't receive job\n");
 			return 1;
 		}
